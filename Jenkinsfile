@@ -29,13 +29,13 @@ pipeline{
 		}
 		stage("deploy"){
 			 when { branch 'develop' }
-			steps{
+			steps{ 
+				def dockerrunfe= "docker run -d --rm -p 8989:4200 --name frontend 98ashish/myfeapp:${DOCKER_TAG}"
+				def dockerrunbe= "docker run -d --rm -p 8990:27017 --name backend 98ashish/mybeapp:${DOCKER_TAG}"
+ 				def dockerrunapi= "docker run -d --rm -p 8991:5000 --name api 98ashish/myapiapp:${DOCKER_TAG}"
 				sshagent(['ec2cred']){
-					def dockerrunfe= "docker run -d --rm -p 8989:4200 --name frontend 98ashish/myfeapp:${DOCKER_TAG}"
     					sh "ssh -o StrictHostKeyChecking=no ec2-user@${privateip} ${dockerrunfe}"
-					def dockerrunbe= "docker run -d --rm -p 8990:27017 --name backend 98ashish/mybeapp:${DOCKER_TAG}"
                                         sh "ssh -o StrictHostKeyChecking=no ec2-user@${privateip} ${dockerrunbe}"
-					def dockerrunapi= "docker run -d --rm -p 8991:5000 --name api 98ashish/myapiapp:${DOCKER_TAG}"
                                         sh "ssh -o StrictHostKeyChecking=no ec2-user@${privateip} ${dockerrunapi}"
 				}
 			}
