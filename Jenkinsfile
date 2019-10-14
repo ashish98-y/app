@@ -30,8 +30,7 @@ pipeline{
 		stage("deploy"){
 			 when { branch 'develop' }
 			steps{
-				sshagent(['ec2cred']) {
-					#def privateip = "172.31.17.11"
+				sshagent(['ec2cred']){
 					def dockerrunfe= "docker run -d --rm -p 8989:4200 --name frontend 98ashish/myfeapp:${DOCKER_TAG}"
     					sh "ssh -o StrictHostKeyChecking=no ec2-user@${privateip} ${dockerrunfe}"
 					def dockerrunbe= "docker run -d --rm -p 8990:27017 --name backend 98ashish/mybeapp:${DOCKER_TAG}"
