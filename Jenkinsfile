@@ -1,4 +1,4 @@
-node{
+pipeline{
 	agent any
 	DOCKER_TAG = getDockerTag()
 	stages{
