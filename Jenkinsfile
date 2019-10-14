@@ -26,8 +26,12 @@ pipeline{
 			}
 		}
 		stage("deploy"){
+			 when { branch 'develop' }
 			steps{
-				echo deploy
+				sshagent(['ec2cred']) {
+					def dockerrun= 'docker run -d --rm -p 8989:4200 --name frontend 98ashish/myfeapp:1.0'
+    					sh "ssh -o StrictHostKeyChecking=no ec2-user@privateip ${dockerrun}"
+				}
 			}
 		}
 	}
