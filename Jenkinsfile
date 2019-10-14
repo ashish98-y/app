@@ -5,7 +5,7 @@ pipeline{
 		privateip = "172.31.17.11"
                 dockerrunfe= "docker run -d --rm -p 8989:4200 --name frontend 98ashish/myfeapp:${DOCKER_TAG}"
                 dockerrunbe= "docker run -d --rm -p 8990:27017 --name backend 98ashish/mybeapp:${DOCKER_TAG}"
-                dockerrunapi= "docker run -d --rm -p 8991:5000 --name api 98ashish/myapiapp:${DOCKER_TAG}"
+                dockerrunapi= "docker run -d --rm -p 8991:80 --name api 98ashish/myapiapp:${DOCKER_TAG}"
 	}
 	stages{
 		stage("build"){
