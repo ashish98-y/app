@@ -1,6 +1,8 @@
 pipeline{
 	agent any
-	DOCKER_TAG = getDockerTag()
+	environment{
+		DOCKER_TAG = getDockerTag()
+	}
 	stages{
 		stage("build"){
 			when { branch 'develop' }
@@ -24,6 +26,9 @@ pipeline{
 			}
 		}
 		stage("deploy"){
+			steps{
+				echo deploy
+			}
 		}
 	}
 }
